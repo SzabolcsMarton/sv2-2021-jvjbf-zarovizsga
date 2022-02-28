@@ -25,19 +25,19 @@ public class ShippingService {
 
     public Map<String, Integer> collectTransportableByCountry() {
         Map<String, Integer> tranportByCountry = new HashMap<>();
-        for(Transportable actual : transportables){
-           if(!tranportByCountry.containsKey(actual.getDestinationCountry())) {
-               tranportByCountry.put(actual.getDestinationCountry(), 1);
-           }else {
-               tranportByCountry.put(actual.getDestinationCountry(), tranportByCountry.get(actual.getDestinationCountry()) +1);
-           }
+        for (Transportable actual : transportables) {
+            if (!tranportByCountry.containsKey(actual.getDestinationCountry())) {
+                tranportByCountry.put(actual.getDestinationCountry(), 1);
+            } else {
+                tranportByCountry.put(actual.getDestinationCountry(), tranportByCountry.get(actual.getDestinationCountry()) + 1);
+            }
         }
         return tranportByCountry;
     }
 
     public List<Transportable> sortInternationalPackagesByDistance() {
         return transportables.stream().filter(transportable -> transportable instanceof InternationalPackage)
-                .sorted((o1, o2) -> ((InternationalPackage) o1).getDistance() -((InternationalPackage)o2).getDistance())
+                .sorted(Comparator.comparingInt(o -> ((InternationalPackage) o).getDistance()))
                 .toList();
     }
 }
